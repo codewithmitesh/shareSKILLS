@@ -1,6 +1,6 @@
 # skillshare
 
-A new Flutter project.
+A the social media app to showcase your skills
 
 ## Getting Started
 
