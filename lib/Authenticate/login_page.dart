@@ -1,9 +1,11 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors_in_immutables, implementation_imports
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors_in_immutables, implementation_imports, avoid_print
 
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/src/provider.dart';
+import 'package:skillshare/Authenticate/create_account.dart';
 import 'package:skillshare/Home/home.dart';
+import 'create_account.dart';
 import '../Services/auth.dart';
 // ignore_for_file: prefer_const_constructors
 // ignore_for_file: lowercase_with_underscore
@@ -16,11 +18,11 @@ class LoginPage extends StatefulWidget {
   State<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with ChangeNotifier {
   // final Authentication _auth = new Authentication();
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passController = TextEditingController();
+  final TextEditingController emailControllerForLogin = TextEditingController();
+  final TextEditingController passControllerForLogin = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -82,11 +84,11 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Container(
                 padding: EdgeInsets.all(8.0),
-                height: 300,
+                height: 350,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage('assets/Images/Snowman.png'),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
                 child: Stack(
@@ -95,13 +97,14 @@ class _LoginPageState extends State<LoginPage> {
                       height: 200,
                       margin: EdgeInsets.only(left: 5, top: 55),
                       child: TextField(
-                        controller: emailController,
+                        controller: passControllerForLogin,
                         decoration:
                             InputDecoration(hintText: 'Enter Password ID'),
                       ),
                     ),
+                    //below is for email TextFIeld
                     TextField(
-                      controller: passController,
+                      controller: emailControllerForLogin,
                       decoration: InputDecoration(hintText: 'Enter Email ID'),
                     ),
                     Container(
@@ -114,25 +117,39 @@ class _LoginPageState extends State<LoginPage> {
                         child: ElevatedButton(
                           child: Text("Login Button"),
                           onPressed: () {
-                            if (emailController.text.isNotEmpty) {
+                            if (emailControllerForLogin.text.isNotEmpty) {
                               Provider.of<Authentication>(context,
                                       listen: false)
-                                  .logIntoAccount(
-                                      emailController.text, passController.text)
-                                  .whenComplete(() => Navigator.pushReplacement(
-                                      context,
-                                      PageTransition(
-                                          child: HomeProfile(),
-                                          type:
-                                              PageTransitionType.leftToRight)));
+                                  .logIntoAccount(emailControllerForLogin.text,
+                                      passControllerForLogin.text)
+                                  .whenComplete(() => {
+                                        print(
+                                            "Logged In Successfully with User ")
+                                      });
                             } else {
-                              // ignore: avoid_print
                               print('Please PRovide Proper Emails');
                             }
                           },
                         ),
                       ),
                     ),
+                    Container(
+                      margin: EdgeInsets.only(top: 200),
+                      height: MediaQuery.of(context).size.height * 0.05,
+                      width: MediaQuery.of(context).size.width,
+                      // color: Colors.black,
+                      child: ElevatedButton(
+                        child: Text("Create Free Account"),
+                        onPressed: () => {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                                child: SignUpPage(),
+                                type: PageTransitionType.rightToLeft),
+                          ),
+                        },
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -143,3 +160,10 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 }
+// Beware ful whichever widget we use Provider we need to add ' with changeNotifier '
+//  Navigator.pushReplacement(
+//                                       context,
+//                                       PageTransition(
+//                                           child: HomeProfile(),
+//                                           type:
+//                                               PageTransitionType.leftToRight))

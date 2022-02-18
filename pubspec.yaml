@@ -59,6 +59,7 @@ flutter:
     - assets/Images/2020.png
     - assets/Images/Snowman.png
     - assets/Images/background.png
+    - assets/Images/SignUpImage.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -14,7 +14,7 @@ class HomeProfile extends StatefulWidget {
   State<HomeProfile> createState() => _HomeProfileState();
 }
 
-class _HomeProfileState extends State<HomeProfile> {
+class _HomeProfileState extends State<HomeProfile> with ChangeNotifier {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
