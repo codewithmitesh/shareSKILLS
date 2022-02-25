@@ -1,8 +1,11 @@
 // ignore_for_file: prefer_const_constructors, camel_case_types, prefer_const_constructors_in_immutables
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:skillshare/Services/firebase_operations.dart';
 import './Authenticate/login_page.dart';
 import 'Authenticate/landing_helper.dart';
+import 'Controlls/control_services.dart';
+import 'Controlls/control_utils.dart';
 import 'Home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,8 +28,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => FirebaseOperations()),
+        ChangeNotifierProvider(create: (_) => ControlUtils()),
         ChangeNotifierProvider(create: (_) => LandingHelpers()),
-        ChangeNotifierProvider(create: (_) => Authentication())
+        ChangeNotifierProvider(create: (_) => Authentication()),
+        ChangeNotifierProvider(create: (_) => ControlServices())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

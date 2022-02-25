@@ -53,10 +53,22 @@ class _SignUpPageState extends State<SignUpPage> with ChangeNotifier {
                         ),
                       ),
                     ),
+                    Container(
+                      margin: EdgeInsets.only(top: 180, bottom: 0, left: 120),
+                      child: CircleAvatar(
+                        backgroundColor: Colors.purpleAccent[700],
+                        radius: 60,
+                        child: Text(
+                          "+",
+                          style: TextStyle(fontSize: 35),
+                          // onPressed: ();
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
-              Container(
+              SizedBox(
                 height: 359,
                 width: 400,
                 // color: Colors.blueGrey,
