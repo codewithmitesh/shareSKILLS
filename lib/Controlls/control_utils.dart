@@ -13,21 +13,20 @@ import 'package:skillshare/Services/firebase_operations.dart';
 
 class ControlUtils with ChangeNotifier {
   final picker = ImagePicker();
-  late File userAvatar;
+  File userAvatar = File("");
   File get getUserAvatar => userAvatar;
-  late String userAvatarUrl;
+  String userAvatarUrl = "";
   String get getUserAvatarUrl => userAvatarUrl;
 
   // Noe Declaring Future For Picking the Image from file system
   Future pickUserAvatar(BuildContext context, ImageSource source) async {
-    final pickedUserAvatar = await picker.getImage(source: source);
+    final pickedUserAvatar = await picker.pickImage(source: source);
     if (pickedUserAvatar == null) {
       print("Please Select the user avatar");
+      return;
     } else {
       userAvatar = File(pickedUserAvatar.path);
     }
-
-    print(userAvatar.path);
 
     if (userAvatar != null) {
       Provider.of<ControlServices>(context, listen: false)
@@ -36,60 +35,62 @@ class ControlUtils with ChangeNotifier {
       print("Image Upload Error!!!");
     }
 
+    print(userAvatar.path);
+
     notifyListeners();
   }
 
   Future selectAvatarOptionSheet(BuildContext context) async {
     return showBottomSheet(
-        context: context,
-        builder: (context) {
-          return Container(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 150),
-                  child: Divider(
-                    thickness: 4.0,
-                    color: Colors.yellow,
+      context: context,
+      builder: (context) {
+        return Container(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 150),
+                child: Divider(
+                  thickness: 4.0,
+                  color: Colors.yellow,
+                ),
+              ),
+              Row(
+                children: [
+                  ElevatedButton(
+                    child: Text("Gallery"),
+                    onPressed: () {
+                      pickUserAvatar(context, ImageSource.gallery)
+                          .whenComplete(() {
+                        Navigator.pop(context);
+                        Provider.of<ControlServices>(context, listen: false)
+                            .showUserAvatar(context);
+                      });
+                    },
                   ),
-                ),
-                Row(
-                  children: [
-                    ElevatedButton(
-                      child: Text("Galleru"),
+                  ElevatedButton(
+                      child: Text("Camera"),
                       onPressed: () {
-                        pickUserAvatar(context, ImageSource.gallery)
-                            .whenComplete(() {
-                          Navigator.pop(context);
-                          Provider.of<ControlServices>(context, listen: false)
-                              .showUserAvatar(context);
-                        });
-                      },
-                    ),
-                    ElevatedButton(
-                        child: Text("Camera"),
-                        onPressed: () {
-                          pickUserAvatar(context, ImageSource.camera)
-                              .whenComplete(
-                            () {
-                              Navigator.pop(context);
-                              Provider.of<ControlServices>(context,
-                                      listen: false)
-                                  .showUserAvatar(context);
-                            },
-                          );
-                        })
-                  ],
-                ),
-              ],
-            ),
-            height: MediaQuery.of(context).size.height * 0.1,
-            width: MediaQuery.of(context).size.width,
-            decoration: BoxDecoration(
-              color: Colors.blueAccent,
-              borderRadius: BorderRadius.circular(12.0),
-            ),
-          );
-        });
+                        pickUserAvatar(context, ImageSource.camera)
+                            .whenComplete(
+                          () {
+                            Navigator.pop(context);
+                            Provider.of<ControlServices>(context, listen: false)
+                                .showUserAvatar(context);
+                          },
+                        );
+                      })
+                ],
+              ),
+            ],
+          ),
+          height: MediaQuery.of(context).size.height * 0.1,
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            color: Colors.blueAccent,
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+        );
+      },
+    );
   }
 }

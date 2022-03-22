@@ -97,6 +97,7 @@ class _LoginPageState extends State<LoginPage> with ChangeNotifier {
                       height: 200,
                       margin: EdgeInsets.only(left: 5, top: 55),
                       child: TextField(
+                        obscureText: true,
                         controller: passControllerForLogin,
                         decoration:
                             InputDecoration(hintText: 'Enter Password ID'),

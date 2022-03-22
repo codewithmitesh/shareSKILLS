@@ -34,6 +34,7 @@ class ControlServices with ChangeNotifier {
                 ),
                 Container(
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       ElevatedButton(
                         child: Text("Reselect"),
@@ -47,7 +48,12 @@ class ControlServices with ChangeNotifier {
                         onPressed: () {
                           Provider.of<FirebaseOperations>(context,
                                   listen: false)
-                              .uploadUserAvatar(context);
+                              .uploadUserAvatar(context)
+                              .whenComplete(() {
+                            // print(
+                            //     "The USer Avatar Image url => ${Provider.of<ControlUtils>(context, listen: false).userAvatarUrl}");
+                            Navigator.pop(context);
+                          });
                         },
                       )
                     ],
@@ -62,4 +68,6 @@ class ControlServices with ChangeNotifier {
           );
         });
   }
+
+  notifyListeners();
 }
