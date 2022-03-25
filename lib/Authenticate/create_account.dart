@@ -22,6 +22,7 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> with ChangeNotifier {
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController passController = TextEditingController();
 
   var pickUserAV = new ControlUtils();
@@ -29,147 +30,154 @@ class _SignUpPageState extends State<SignUpPage> with ChangeNotifier {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                height: 400,
-                width: 400,
-                // color: Colors.blue,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/Images/SignUpImage.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                child: Stack(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(
-                          top: 58, bottom: 0, left: 30, right: 0),
-                      child: Text(
-                        "Create a free Account",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w800,
-                          fontSize: 30,
-                          color: Colors.purpleAccent[700],
-
-                          // backgroundColor: Colors.blue,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 180, bottom: 0, left: 120),
-                      child: GestureDetector(
-                        onTap: () {
-                          pickUserAV
-                              .pickUserAvatar(context, ImageSource.gallery)
-                              .whenComplete(() {
-                            Navigator.pop(context);
-                            Provider.of<ControlServices>(context, listen: false)
-                                .showUserAvatar(context);
-                          });
-                        },
-                        child: CircleAvatar(
-                          backgroundColor: Colors.black,
-                          backgroundImage: FileImage(
-                              Provider.of<ControlUtils>(context, listen: false)
-                                  .getUserAvatar),
-                          radius: 60,
-                        ),
-                      ),
-
-                      // Provider.of<ControlUtils>(context, listen: false)
-                      //     .selectAvatarOptionSheet(context)
-                      //     .whenComplete(() {
-                      //   print("Uploaded Successfully");
-                      // });
-
-                      // child: CircleAvatar(
-                      //   backgroundColor: Colors.purpleAccent[700],
-                      //   radius: 60,
-                      //   child: ElevatedButton(
-                      //     child: Text("Add Image"),
-                      //     onPressed: () {
-                      //       Provider.of<ControlUtils>(context, listen: false)
-                      //           .selectAvatarOptionSheet(context);
-
-                      //     },
-                      //   ),
-                      // ),
-                    ),
-                  ],
+      body:
+          //* Logic of Email And Pass Field Complete
+          Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: ListView(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(top: 75, bottom: 0, left: 15),
+              child: GestureDetector(
+                onTap: () {
+                  pickUserAV
+                      .pickUserAvatar(context, ImageSource.gallery)
+                      .whenComplete(() {
+                    Navigator.pop(context);
+                    Provider.of<ControlServices>(context, listen: false)
+                        .showUserAvatar(context);
+                  });
+                },
+                child: CircleAvatar(
+                  backgroundColor: Colors.black,
+                  backgroundImage: FileImage(
+                      Provider.of<ControlUtils>(context, listen: false)
+                          .getUserAvatar),
+                  radius: 60,
                 ),
               ),
-              SizedBox(
-                height: 359,
-                width: 400,
-                // color: Colors.blueGrey,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                      child: TextField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Enter Your Email ',
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-                      child: TextField(
-                        obscureText: true,
-                        controller: passController,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Enter Your Password ',
-                        ),
-                      ),
-                    ),
-                    ElevatedButton(
-                      child: Text("Create Account"),
-                      onPressed: () {
-                        if (emailController.text.isNotEmpty) {
-                          Provider.of<Authentication>(context, listen: false)
-                              .createAccount(
-                                  emailController.text, passController.text)
-                              .whenComplete(() => {
-                                    print("Creating Collection"),
-                                    Provider.of<FirebaseOperations>(context,
-                                            listen: false)
-                                        .createUserCollections(context, {
-                                      'userId': Provider.of<Authentication>(
-                                              context,
-                                              listen: false)
-                                          .getUserUid,
-                                      'userEmail': emailController.text,
-                                      'userImage': Provider.of<ControlUtils>(
-                                              context,
-                                              listen: false)
-                                          .getUserAvatarUrl,
-                                    })
-                                  })
-                              .whenComplete(() {});
-                        } else {
-                          print("Please Provide the proper email address !!!");
-                        }
-                      },
-                    )
-                  ],
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Container(
+              width: 360,
+              child: TextField(
+                controller: nameController,
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.person),
+                  border: OutlineInputBorder(),
+                  labelText: 'Name',
+                  hintText: 'Enter your name',
                 ),
-              )
-            ],
-          ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              width: 360,
+              child: TextField(
+                controller: emailController,
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.email),
+                  border: OutlineInputBorder(),
+                  labelText: 'Email',
+                  hintText: 'Enter Email',
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              width: 360,
+              child: TextField(
+                obscureText: true,
+                controller: passController,
+                decoration: const InputDecoration(
+                  icon: Icon(Icons.password),
+                  border: OutlineInputBorder(),
+                  labelText: 'Password',
+                  hintText: 'Enter Password',
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            Container(
+              child: Row(
+                children: <Widget>[
+                  Text('Already have an account?'),
+                  SizedBox(
+                    width: 90,
+                    child: FlatButton(
+                      textColor: Colors.blue,
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                ],
+                mainAxisAlignment: MainAxisAlignment.center,
+              ),
+            ),
+            Container(
+              height: 50,
+              width: 380,
+              padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: RaisedButton(
+                textColor: Colors.white,
+                color: Colors.grey,
+                child: Text(
+                  'Sign Up',
+                  style: TextStyle(fontWeight: FontWeight.w900),
+                ),
+                onPressed: () {
+                  if (emailController.text.isNotEmpty) {
+                    Provider.of<Authentication>(context, listen: false)
+                        .createAccount(
+                            emailController.text, passController.text)
+                        .whenComplete(() => {
+                              print("Creating Collection"),
+                              Provider.of<FirebaseOperations>(context,
+                                      listen: false)
+                                  .createUserCollections(context, {
+                                'userId': Provider.of<Authentication>(context,
+                                        listen: false)
+                                    .getUserUid,
+                                'userName': nameController.text,
+                                'userEmail': emailController.text,
+                                'userImage': Provider.of<ControlUtils>(context,
+                                        listen: false)
+                                    .getUserAvatarUrl,
+                              })
+                            })
+                        .whenComplete(() {
+                      Navigator.pushReplacement(
+                          context,
+                          PageTransition(
+                              child: HomeProfile(),
+                              type: PageTransitionType.bottomToTop));
+                    });
+                  } else {
+                    print("Please Provide the proper email address !!!");
+                  }
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
-
-  notifyListeners();
 }

@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:skillshare/Services/auth.dart';
 import 'OnboardingScreen/onboarding_screen.dart';
 import 'Screens/profile.dart';
+import 'Screens/profilehelper.dart';
 import 'wrapper.dart';
 
 void main() async {
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => LandingHelpers()),
         ChangeNotifierProvider(create: (_) => Authentication()),
         ChangeNotifierProvider(create: (_) => ControlServices()),
+        ChangeNotifierProvider(create: (_) => ProfileHelper()),
         ChangeNotifierProvider(create: (_) => HomePageHelpers()),
       ],
       child: MaterialApp(

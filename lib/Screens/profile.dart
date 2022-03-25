@@ -1,6 +1,14 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, unnecessary_new
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
+import 'package:skillshare/Authenticate/login_page.dart';
+
+import '../Services/auth.dart';
+import 'profilehelper.dart';
 
 class ProfilPage extends StatefulWidget {
   final String url;
@@ -12,203 +20,128 @@ class ProfilPage extends StatefulWidget {
 }
 
 class _ProfilPageState extends State<ProfilPage> {
-  int _selectedItemIndex = 0;
+  // int _selectedItemIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 35),
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Icon(Icons.arrow_back_ios)),
-                Icon(Icons.more_vert),
-              ],
-            ),
+      // bottomNavigationBar: ,
+      body: SingleChildScrollView(
+        // controller: ,
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          child: StreamBuilder<DocumentSnapshot>(
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return new Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(top: 35),
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Icon(Icons.arrow_back_ios)),
+                          IconButton(
+                            icon: Icon(EvaIcons.logOut),
+                            onPressed: () {
+                              Provider.of<ProfileHelper>(context, listen: false)
+                                  .LogOutDiaglog(context);
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                    Provider.of<ProfileHelper>(context, listen: false)
+                        .HeaderProfile(context, snapshot),
+                    Provider.of<ProfileHelper>(context, listen: false)
+                        .FooterProfile(context, snapshot),
+                  ],
+                );
+              }
+            },
+            stream: FirebaseFirestore.instance
+                .collection('user')
+                .doc(Provider.of<Authentication>(context, listen: false)
+                    .getUserUid)
+                .snapshots(),
           ),
-          Hero(
-            tag: widget.url,
-            child: Container(
-              margin: EdgeInsets.only(top: 35),
-              height: 80,
-              width: 80,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(40),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    spreadRadius: 5,
-                    blurRadius: 20,
-                  )
-                ],
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(widget.url),
-                ),
-              ),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            "Username",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          Text(
-            "MITAOE, Alandi, Pune",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[400],
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              buildStatColumn("53", "skills shared"),
-              buildStatColumn("223k", "Followers"),
-              buildStatColumn("117", "Following"),
-            ],
-          ),
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.only(left: 8, right: 8, top: 8),
-              decoration: BoxDecoration(
-                  color: Colors.grey.withOpacity(0.15),
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(25))),
-              child: GridView.count(
-                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 8),
-                crossAxisCount: 2,
-                crossAxisSpacing: 5,
-                mainAxisSpacing: 5,
-                childAspectRatio: 5 / 6,
-                children: [
-                  buildPictureCard(
-                      "https://www.haqseengineer.com/wp-content/uploads/2019/07/campus3-1.jpg"),
-                  buildPictureCard(
-                      "https://images.pexels.com/photos/132037/pexels-photo-132037.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=200&w=1260"),
-                  buildPictureCard(
-                      "https://images.pexels.com/photos/733475/pexels-photo-733475.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=200&w=1260 "),
-                  buildPictureCard(
-                      "https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=200&w=1260"),
-                  buildPictureCard(
-                      "https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=200&w=1260"),
-                  buildPictureCard(
-                      "https://images.pexels.com/photos/268533/pexels-photo-268533.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=200&w=1260"),
-                ],
-              ),
-            ),
-          )
-        ],
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        height: 60,
-        child: FittedBox(
-          child: FloatingActionButton(
-            onPressed: () {},
-            child: Icon(
-              Icons.add,
-            ),
-            backgroundColor: Colors.grey[900],
-            elevation: 15,
-          ),
+          decoration: BoxDecoration(),
         ),
       ),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.1),
-                spreadRadius: 1,
-              )
-            ],
-            color: Colors.grey.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(15)),
-        child: Row(
-          children: [
-            buildNavBarItem(Icons.home, 0),
-            buildNavBarItem(Icons.search, 1),
-            // buildNavBarItem(null, -1),
-            buildNavBarItem(Icons.notifications, 2),
-            buildNavBarItem(Icons.person, 3),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildNavBarItem(IconData icon, int index) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedItemIndex = index;
-        });
-      },
-      child: Container(
-        // width: MediaQuery.of(context).size.width / 5,
-        height: 45,
-        child: icon != null
-            ? Icon(
-                icon,
-                size: 25,
-                color: index == _selectedItemIndex
-                    ? Colors.black
-                    : Colors.grey[700],
-              )
-            : Container(),
-      ),
-    );
-  }
-
-  Card buildPictureCard(String url) {
-    return Card(
-      elevation: 10,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: NetworkImage(url),
-            )),
-      ),
-    );
-  }
-
-  Column buildStatColumn(String value, String title) {
-    return Column(
-      children: [
-        Text(
-          value,
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-            color: Colors.grey[400],
-          ),
-        ),
-      ],
     );
   }
 }
+      
+      
+      
+
+  // Widget buildNavBarItem(IconData icon, int index) {
+  //   return GestureDetector(
+  //     onTap: () {
+  //       setState(() {
+  //         _selectedItemIndex = index;
+  //       });
+  //     },
+  //     child: Container(
+  //       // width: MediaQuery.of(context).size.width / 5,
+  //       height: 45,
+  //       child: icon != null
+  //           ? Icon(
+  //               icon,
+  //               size: 25,
+  //               color: index == _selectedItemIndex
+  //                   ? Colors.black
+  //                   : Colors.grey[700],
+  //             )
+  //           : Container(),
+  //     ),
+  //   );
+  // }
+
+//   Card buildPictureCard(String url) {
+//     return Card(
+//       elevation: 10,
+//       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+//       child: Container(
+//         decoration: BoxDecoration(
+//             borderRadius: BorderRadius.circular(30),
+//             image: DecorationImage(
+//               fit: BoxFit.cover,
+//               image: NetworkImage(url),
+//             )),
+//       ),
+//     );
+//   }
+
+//   Column buildStatColumn(String value, String title) {
+//     return Column(
+//       children: [
+//         Text(
+//           value,
+//           style: TextStyle(
+//             fontSize: 18,
+//             fontWeight: FontWeight.bold,
+//           ),
+//         ),
+//         Text(
+//           title,
+//           style: TextStyle(
+//             fontSize: 12,
+//             fontWeight: FontWeight.bold,
+//             color: Colors.grey[400],
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
+

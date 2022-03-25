@@ -1,7 +1,35 @@
+import 'package:custom_navigation_bar/custom_navigation_bar.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class HomePageHelpers with ChangeNotifier {
-  Widget bottomNavBar(
+  Widget bottomNavBar(int index, PageController pageController) {
+    return CustomNavigationBar(
+      currentIndex: index,
+      bubbleCurve: Curves.bounceIn,
+      scaleCurve: Curves.decelerate,
+      selectedColor: Colors.black,
+      strokeColor: Colors.blue,
+      unSelectedColor: Colors.grey[300],
+      scaleFactor: 0.5,
+      iconSize: 30,
+      backgroundColor: Colors.white,
+      onTap: (val) {
+        index = val;
+        pageController.jumpToPage(val);
+        notifyListeners();
+      },
+      items: [
+        CustomNavigationBarItem(icon: Icon(EvaIcons.home)),
+        CustomNavigationBarItem(icon: Icon(EvaIcons.messageSquare)),
+        // CustomNavigationBarItem(icon: Icon(EvaIcons.search)),
+        CustomNavigationBarItem(icon: Icon(EvaIcons.person)),
+      ],
+    );
+  }
+}
+/*
+bottomNavBar(
       int index, PageController pageController, BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -23,9 +51,7 @@ class HomePageHelpers with ChangeNotifier {
         ],
       ),
     );
-  }
-
-  Widget buildNavBarItem(IconData icon, int index,
+     Widget buildNavBarItem(IconData icon, int index,
       PageController pageController, BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -46,4 +72,4 @@ class HomePageHelpers with ChangeNotifier {
       ),
     );
   }
-}
+  */

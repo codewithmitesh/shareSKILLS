@@ -37,11 +37,7 @@ class _HomeProfileState extends State<HomeProfile> with ChangeNotifier {
         backgroundColor: Colors.grey[300],
         body: PageView(
           controller: homepageController,
-          children: [
-            FeedPage(),
-            ChatRoom(),
-            // ProfilPage(url: );
-          ],
+          children: [FeedPage(), ChatRoom(), ProfilPage(url: "@")],
           physics: NeverScrollableScrollPhysics(),
           onPageChanged: (page) {
             setState(() {
@@ -51,6 +47,6 @@ class _HomeProfileState extends State<HomeProfile> with ChangeNotifier {
         ),
         bottomNavigationBar:
             Provider.of<HomePageHelpers>(context, listen: false)
-                .bottomNavBar(pageIndex, homepageController, context));
+                .bottomNavBar(pageIndex, homepageController));
   }
 }

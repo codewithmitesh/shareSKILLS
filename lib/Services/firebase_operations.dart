@@ -57,11 +57,12 @@ class FirebaseOperations with ChangeNotifier {
         .get()
         .then((doc) {
       print("Fetching User Data");
-      // initUserName = doc.data()!['username'];
+      initUserName = doc.data()!['username'];
       initUserEmail = doc.data()!['userEmail'];
       initUserImage = doc.data()!['userImage'];
       print('user Email is - > ${initUserEmail}');
       print('user Image is - > ${initUserImage}');
+      print('user NAme is - > ${initUserName}');
       notifyListeners();
     });
   }
