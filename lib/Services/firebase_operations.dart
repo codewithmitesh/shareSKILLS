@@ -10,6 +10,7 @@ import 'auth.dart';
 
 class FirebaseOperations with ChangeNotifier {
   late UploadTask imageUploadTask;
+  late String initUserEmail, initUserName, initUserImage;
 
   Future uploadUserAvatar(BuildContext context) async {
     Reference imageReference = FirebaseStorage.instance.ref().child(
@@ -40,10 +41,28 @@ class FirebaseOperations with ChangeNotifier {
     notifyListeners();
   }
 
+//* Creating a Collection or data in databse as sooon as user creates the account
   Future createUserCollections(BuildContext context, dynamic data) async {
     return FirebaseFirestore.instance
         .collection('user')
         .doc(Provider.of<Authentication>(context, listen: false).getUserUid)
         .set(data);
+  }
+
+  //* Method to fetch the inital data from the Firebase
+  Future initUserData(BuildContext context) async {
+    return FirebaseFirestore.instance
+        .collection('user')
+        .doc(Provider.of<Authentication>(context, listen: false).getUserUid)
+        .get()
+        .then((doc) {
+      print("Fetching User Data");
+      // initUserName = doc.data()!['username'];
+      initUserEmail = doc.data()!['userEmail'];
+      initUserImage = doc.data()!['userImage'];
+      print('user Email is - > ${initUserEmail}');
+      print('user Image is - > ${initUserImage}');
+      notifyListeners();
+    });
   }
 }

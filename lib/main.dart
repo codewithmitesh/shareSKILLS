@@ -1,16 +1,19 @@
 // ignore_for_file: prefer_const_constructors, camel_case_types, prefer_const_constructors_in_immutables
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:skillshare/Screens/homepagehelpers.dart';
 import 'package:skillshare/Services/firebase_operations.dart';
 import './Authenticate/login_page.dart';
 import 'Authenticate/landing_helper.dart';
 import 'Controlls/control_services.dart';
 import 'Controlls/control_utils.dart';
-import 'Home/home.dart';
+import 'Screens/feed.dart';
+import 'Screens/home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:skillshare/Services/auth.dart';
 import 'OnboardingScreen/onboarding_screen.dart';
+import 'Screens/profile.dart';
 import 'wrapper.dart';
 
 void main() async {
@@ -32,7 +35,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ControlUtils()),
         ChangeNotifierProvider(create: (_) => LandingHelpers()),
         ChangeNotifierProvider(create: (_) => Authentication()),
-        ChangeNotifierProvider(create: (_) => ControlServices())
+        ChangeNotifierProvider(create: (_) => ControlServices()),
+        ChangeNotifierProvider(create: (_) => HomePageHelpers()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -57,6 +61,9 @@ class _wrapperState extends State<wrapper> {
     // TODO: Here We need Maintain the Already login Situation and here Login Screen will be Floated
     // return LoginPage()
 
+//! Uncomment this to show again Introscreen and Everything
     return IntroScreen();
+    // return HomeProfile();
+    // return ProfilPage(url: "http://#");
   }
 }

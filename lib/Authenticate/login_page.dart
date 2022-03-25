@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/src/provider.dart';
 import 'package:skillshare/Authenticate/create_account.dart';
-import 'package:skillshare/Home/home.dart';
+import 'package:skillshare/Screens/home.dart';
 import 'create_account.dart';
 import '../Services/auth.dart';
 // ignore_for_file: prefer_const_constructors
@@ -124,8 +124,13 @@ class _LoginPageState extends State<LoginPage> with ChangeNotifier {
                                   .logIntoAccount(emailControllerForLogin.text,
                                       passControllerForLogin.text)
                                   .whenComplete(() => {
-                                        print(
-                                            "Logged In Successfully with User ")
+                                        Navigator.pushReplacement(
+                                            context,
+                                            PageTransition(
+                                              child: HomeProfile(),
+                                              type: PageTransitionType
+                                                  .leftToRight,
+                                            ))
                                       });
                             } else {
                               print('Please PRovide Proper Emails');

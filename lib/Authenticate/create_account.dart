@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/src/provider.dart';
 import 'package:skillshare/Controlls/control_utils.dart';
-import 'package:skillshare/Home/home.dart';
+import 'package:skillshare/Screens/home.dart';
 import '../Controlls/control_services.dart';
 import '../Services/auth.dart';
 import '../Services/firebase_operations.dart';
@@ -154,7 +154,8 @@ class _SignUpPageState extends State<SignUpPage> with ChangeNotifier {
                                               listen: false)
                                           .getUserAvatarUrl,
                                     })
-                                  });
+                                  })
+                              .whenComplete(() {});
                         } else {
                           print("Please Provide the proper email address !!!");
                         }
