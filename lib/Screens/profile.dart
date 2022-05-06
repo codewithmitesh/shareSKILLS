@@ -28,7 +28,7 @@ class _ProfilPageState extends State<ProfilPage> {
       body: SingleChildScrollView(
         // controller: ,
         child: Container(
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height*5,
           width: MediaQuery.of(context).size.width,
           child: StreamBuilder<DocumentSnapshot>(
             builder: (context, snapshot) {
