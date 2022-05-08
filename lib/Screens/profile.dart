@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'package:skillshare/Authenticate/login_page.dart';
-
 import '../Services/auth.dart';
 import 'profilehelper.dart';
 
@@ -28,7 +27,7 @@ class _ProfilPageState extends State<ProfilPage> {
       body: SingleChildScrollView(
         // controller: ,
         child: Container(
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height, // *5
           width: MediaQuery.of(context).size.width,
           child: StreamBuilder<DocumentSnapshot>(
             builder: (context, snapshot) {
@@ -80,32 +79,29 @@ class _ProfilPageState extends State<ProfilPage> {
     );
   }
 }
-      
-      
-      
 
-  // Widget buildNavBarItem(IconData icon, int index) {
-  //   return GestureDetector(
-  //     onTap: () {
-  //       setState(() {
-  //         _selectedItemIndex = index;
-  //       });
-  //     },
-  //     child: Container(
-  //       // width: MediaQuery.of(context).size.width / 5,
-  //       height: 45,
-  //       child: icon != null
-  //           ? Icon(
-  //               icon,
-  //               size: 25,
-  //               color: index == _selectedItemIndex
-  //                   ? Colors.black
-  //                   : Colors.grey[700],
-  //             )
-  //           : Container(),
-  //     ),
-  //   );
-  // }
+// Widget buildNavBarItem(IconData icon, int index) {
+//   return GestureDetector(
+//     onTap: () {
+//       setState(() {
+//         _selectedItemIndex = index;
+//       });
+//     },
+//     child: Container(
+//       // width: MediaQuery.of(context).size.width / 5,
+//       height: 45,
+//       child: icon != null
+//           ? Icon(
+//               icon,
+//               size: 25,
+//               color: index == _selectedItemIndex
+//                   ? Colors.black
+//                   : Colors.grey[700],
+//             )
+//           : Container(),
+//     ),
+//   );
+// }
 
 //   Card buildPictureCard(String url) {
 //     return Card(
@@ -144,4 +140,3 @@ class _ProfilPageState extends State<ProfilPage> {
 //     );
 //   }
 // }
-

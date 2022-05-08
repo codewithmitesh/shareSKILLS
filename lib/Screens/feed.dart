@@ -1,18 +1,20 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
+import 'package:provider/provider.dart';
 import 'package:skillshare/Screens/profile.dart';
 
-class SocialMedia extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: FeedPage(),
-    );
-  }
-}
+import '../Controlls/UploadPost.dart';
+
+// class SocialMedia extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: FeedPage(),
+//     );
+//   }
+// }
 
 class FeedPage extends StatefulWidget {
   @override
@@ -20,7 +22,7 @@ class FeedPage extends StatefulWidget {
 }
 
 class _FeedPageState extends State<FeedPage> {
-  int _selectedItemIndex = 0;
+  int _selectedItemIndex = 1;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,12 +31,23 @@ class _FeedPageState extends State<FeedPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "shareSKILLS",
-              style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 68, 5, 73)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "shareSKILLS",
+                  style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 68, 5, 73)),
+                ),
+                MaterialButton(
+                  child: Icon(Icons.camera_alt),
+                  // onPressed: null,
+                  onPressed: Provider.of<UploadPost>(context, listen: false)
+                      .selectPostImageType(context),
+                )
+              ],
             ),
             Container(
               height: 2,
@@ -68,69 +81,10 @@ class _FeedPageState extends State<FeedPage> {
           ],
         ),
       ),
-
-      //* Centered Floating Action Button Ui Logic
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // floatingActionButton: Container(
-      //   height: 60,
-      //   child: FittedBox(
-      //     child: FloatingActionButton(
-      //       onPressed: () {},
-      //       child: Icon(
-      //         Icons.add,
-      //       ),
-      //       backgroundColor: Colors.grey[900],
-      //       elevation: 15,
-      //     ),
-      //   ),
-      // ),
-      //* Navigation Bar UI Logic
-      bottomNavigationBar: Container(
-          // decoration: BoxDecoration(
-          //     boxShadow: [
-          //       BoxShadow(
-          //         color: Colors.grey.withOpacity(0.1),
-          //         spreadRadius: 1,
-          //       )
-          //     ],
-          //     color: Colors.grey.withOpacity(0.2),
-          //     borderRadius: BorderRadius.circular(15)),
-          // child: Row(
-          //   children: [
-          //     buildNavBarItem(Icons.home, 0),
-          //     buildNavBarItem(Icons.search, 1),
-          //     // buildNavBarItem(null, -1),
-          //     buildNavBarItem(Icons.notifications, 2),
-          //     buildNavBarItem(Icons.person, 3),
-          //   ],
-          // ),
-          ),
     );
   }
 
-  // Widget buildNavBarItem(IconData icon, int index) {
-  //   return GestureDetector(
-  //     onTap: () {
-  //       setState(() {
-  //         _selectedItemIndex = index;
-  //       });
-  //     },
-  //     child: Container(
-  //       width: MediaQuery.of(context).size.width / 5,
-  //       height: 45,
-  //       child: icon != null
-  //           ? Icon(
-  //               icon,
-  //               size: 25,
-  //               color: index == _selectedItemIndex
-  //                   ? Colors.black
-  //                   : Colors.grey[700],
-  //             )
-  //           : Container(),
-  //     ),
-  //   );
-  // }
-
+  // Post Section Widget
   Container buildPostSection(String urlPost, String urlProfilePhoto) {
     return Container(
       margin: EdgeInsets.only(bottom: 8),
@@ -165,6 +119,7 @@ class _FeedPageState extends State<FeedPage> {
     );
   }
 
+  // post row widget
   Row buildPostFirstRow(String urlProfilePhoto) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -215,6 +170,7 @@ class _FeedPageState extends State<FeedPage> {
     );
   }
 
+  // postPicture widget
   Stack buildPostPicture(String urlPost) {
     return Stack(
       children: [
@@ -244,6 +200,7 @@ class _FeedPageState extends State<FeedPage> {
     );
   }
 
+  // Story avatar widget
   Container buildStoryAvatar(String url) {
     return Container(
       margin: EdgeInsets.only(left: 18),
