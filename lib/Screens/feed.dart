@@ -3,18 +3,33 @@
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import 'package:provider/provider.dart';
+import 'package:skillshare/Screens/feedHelpers.dart';
 import 'package:skillshare/Screens/profile.dart';
 
 import '../Controlls/UploadPost.dart';
 
-// class SocialMedia extends StatelessWidget {
+// Tried with stateless widget
+// class FeedPage2 extends StatelessWidget {
+//   const FeedPage2({Key? key}) : super(key: key);
+
 //   @override
 //   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: FeedPage(),
-//     );
+//     return Scaffold(
+//         appBar: PreferredSize(
+//       preferredSize: const Size.fromHeight(100),
+//       child: Provider.of<FeedHelper>(context, listen: false).appBar(context),
+//     ));
 //   }
 // }
+
+class SocialMedia extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: FeedPage(),
+    );
+  }
+}
 
 class FeedPage extends StatefulWidget {
   @override
@@ -22,33 +37,20 @@ class FeedPage extends StatefulWidget {
 }
 
 class _FeedPageState extends State<FeedPage> {
-  int _selectedItemIndex = 1;
+  int _selectedItemIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(100),
+        child: Provider.of<FeedHelper>(context, listen: false).appBar(context),
+      ),
       body: Container(
         padding: EdgeInsets.only(left: 10, right: 10, top: 45),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "shareSKILLS",
-                  style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 68, 5, 73)),
-                ),
-                MaterialButton(
-                  child: Icon(Icons.camera_alt),
-                  // onPressed: null,
-                  onPressed: Provider.of<UploadPost>(context, listen: false)
-                      .selectPostImageType(context),
-                )
-              ],
-            ),
             Container(
               height: 2,
               color: Colors.grey[300],
