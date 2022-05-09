@@ -27,11 +27,10 @@ class _ProfilPageState extends State<ProfilPage> {
       body: SingleChildScrollView(
         // controller: ,
         child: Container(
-<<<<<<< HEAD
           height: MediaQuery.of(context).size.height, // *5
-=======
-          height: MediaQuery.of(context).size.height*5,
->>>>>>> a1dbf3e04565adf090ca217a37e61c3341ddbcf8
+
+          // height: MediaQuery.of(context).size.height * 5,
+
           width: MediaQuery.of(context).size.width,
           child: StreamBuilder<DocumentSnapshot>(
             builder: (context, snapshot) {
