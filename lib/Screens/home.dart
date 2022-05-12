@@ -25,6 +25,7 @@ class _HomeProfileState extends State<HomeProfile> with ChangeNotifier {
   void initState() {
     Provider.of<FirebaseOperations>(context, listen: false)
         .initUserData(context);
+
     super.initState();
   }
 

@@ -29,7 +29,7 @@ class ProfileHelper with ChangeNotifier {
             ],
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: NetworkImage(snapshot.data.data()['userImage']),
+              image: NetworkImage(snapshot.data.data()['userImage'].toString()),
               //snapshot.data.data()['userImage']
             ),
           ),
@@ -38,7 +38,8 @@ class ProfileHelper with ChangeNotifier {
           height: 10,
         ),
         Text(
-          "USername",
+          snapshot.data.data()['userName'],
+          // "me",
           // snapshot.data.data()['userName']
           style: TextStyle(
             fontSize: 18,

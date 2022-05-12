@@ -10,7 +10,7 @@ import 'auth.dart';
 
 class FirebaseOperations with ChangeNotifier {
   late UploadTask imageUploadTask;
-  late String initUserEmail, initUserName, initUserImage;
+  late String initUserEmail, initUserName = "", initUserImage;
 
   Future uploadUserAvatar(BuildContext context) async {
     Reference imageReference = FirebaseStorage.instance.ref().child(
@@ -51,18 +51,18 @@ class FirebaseOperations with ChangeNotifier {
 
   //* Method to fetch the inital data from the Firebase
   Future initUserData(BuildContext context) async {
-    return FirebaseFirestore.instance
+    return await FirebaseFirestore.instance
         .collection('user')
         .doc(Provider.of<Authentication>(context, listen: false).getUserUid)
         .get()
         .then((doc) {
       print("Fetching User Data");
-      initUserName = doc.data()!['username'];
+      initUserName = doc.data()!['userName']; // userName
       initUserEmail = doc.data()!['userEmail'];
       initUserImage = doc.data()!['userImage'];
       print('user Email is - > ${initUserEmail}');
       print('user Image is - > ${initUserImage}');
-      print('user NAme is - > ${initUserName}');
+      print('user Name is - > ${initUserName}');
       notifyListeners();
     });
   }
