@@ -35,9 +35,23 @@ Database : Firebase
 1.  User can chat with ther users.
 2.  User can like, comment and Give rewards to other's Post.
 3.  User can share videos, pdfs, links and more.
-4.
 
 <b>Screenshots :</b>
 
-1. Patient registering on the system:
-   ![alt text](https://github.com/codewithmitesh/shareSKILLS/blob/main/Screenshots/LoginSS.jpeg)
+1.  Welcome Screen
+    ![alt text](https://github.com/codewithmitesh/shareSKILLS/blob/main/Screenshots/WelcomeScreen.jpeg)
+
+2.  Login Screen:
+    ![alt text](https://github.com/codewithmitesh/shareSKILLS/blob/main/Screenshots/LoginSS.jpeg)
+3.  Create Account:
+    ![alt text](https://github.com/codewithmitesh/shareSKILLS/blob/main/Screenshots/CreateAccountSS.jpeg)
+4.  Feed  
+    ![alt text](https://github.com/codewithmitesh/shareSKILLS/blob/main/Screenshots/Feed.jpeg)
+5.  User Profile:
+    ![alt text](https://github.com/codewithmitesh/shareSKILLS/blob/main/Screenshots/UserProfile.jpeg)
+6.  Upload Post:
+    ![alt text](https://github.com/codewithmitesh/shareSKILLS/blob/main/Screenshots/UploadPost.jpeg)
+7.  Add Caption:
+    ![alt text](https://github.com/codewithmitesh/shareSKILLS/blob/main/Screenshots/CaptionShare.jpeg)
+8.  Logout:
+    ![alt text](https://github.com/codewithmitesh/shareSKILLS/blob/main/Screenshots/LogoutPopup.jpeg)
