@@ -40,4 +40,4 @@ Database : Firebase
 <b>Screenshots :</b>
 
 1. Patient registering on the system:
-   ![alt text]()
+   ![alt text](<https://github.com/codewithmitesh/shareSKILLS/blob/main/Screenshots/WhatsApp%20Image%202022-06-05%20at%2010.10.07%20AM%20(1).jpeg>)
