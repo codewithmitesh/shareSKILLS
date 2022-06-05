@@ -133,7 +133,7 @@ class FeedHelper with ChangeNotifier {
               height: 5,
             ),
             Text(
-              "Caption",
+              (documentSnapshot.data() as Map)['caption'],
               style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.bold,
